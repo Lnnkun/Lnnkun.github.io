@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zilin Wu (Lnnk)</title>
+<meta name="description" content="Zilin Wu (Lnnk) — Computer Engineering student learning to become a software & AI engineer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: editorial and centred. Serif headlines, app-window previews, and a bento grid of softly shaded cards. */
+:root {
+  --bg: #f7f7f6;
+  --surface: #ffffff;
+  --soft: #efefed;
+  --fg: #171717;
+  --muted: #6e6e6a;
+  --line: #e3e3e0;
+  --ok: #1f8a55;
+  --warn: #b0640a;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "Geist", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111110; --surface: #1b1b1a; --soft: #1f1f1e; --fg: #ececea; --muted: #9b9b96; --line: #2c2c2a;
+    --ok: #5fd39a; --warn: #f0b45c; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111110; --surface: #1b1b1a; --soft: #1f1f1e; --fg: #ececea; --muted: #9b9b96; --line: #2c2c2a;
+  --ok: #5fd39a; --warn: #f0b45c; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; border-radius: 6px; }
+code { font-family: var(--font-mono); font-size: .9em; }
+
+.wrap {
+  max-width: 1040px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+/* Nav */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px);
+}
+.topbar .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding-block: 14px; }
+.brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }
+.brand-mark {
+  width: 22px; height: 22px; border-radius: 6px; background: var(--fg); color: var(--bg);
+  display: grid; place-items: center; font-family: var(--font-display); font-size: 13px; font-weight: 500;
+}
+.nav { display: flex; gap: 22px; }
+.nav a { text-decoration: none; font-size: 13px; color: var(--fg); opacity: .8; }
+.nav a:hover { opacity: 1; }
+.nav-right { display: flex; justify-content: flex-end; gap: 8px; }
+.pill-btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px;
+  border-radius: 8px; border: 0; background: var(--soft); color: var(--fg);
+  font: 500 13px var(--font-body); text-decoration: none; cursor: pointer;
+}
+.pill-btn:hover { background: var(--line); }
+.pill-btn svg { width: 15px; height: 15px; }
+.theme-btn { width: 30px; padding: 0; justify-content: center; }
+@media (max-width: 640px) {
+  .topbar .wrap { grid-template-columns: 1fr auto; }
+  .nav { display: none; }
+}
+
+/* Hero */
+.hero { text-align: center; padding-block: 72px 40px; display: grid; justify-items: center; gap: 22px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 12px 4px 8px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line); font-size: 12.5px;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.4rem, 6vw, 3.8rem); line-height: 1.05; }
+.hero-title { display: grid; justify-items: center; gap: 10px; }
+.hero-name {
+  margin: 0; display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-size: 1.35rem; line-height: 1.2;
+}
+.hero-name span:not(.hero-avatar) { color: var(--muted); }
+.hero-avatar {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--fg); color: var(--bg);
+  display: grid; place-items: center; font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: .03em;
+}
+.lede { max-width: 46ch; color: var(--muted); font-size: 1.05rem; margin: 0; }
+.ctas { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px;
+  border-radius: 9px; font-size: 14px; font-weight: 500; text-decoration: none;
+  background: var(--soft); color: var(--fg); border: 0;
+}
+.btn:hover { background: var(--line); }
+.btn.dark { background: var(--fg); color: var(--bg); }
+.btn.dark:hover { opacity: .88; background: var(--fg); }
+.btn svg { width: 16px; height: 16px; }
+.btn[aria-disabled="true"] { color: var(--muted); cursor: default; }
+.meta { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; font-size: 12.5px; color: var(--muted); }
+.meta span { display: inline-flex; align-items: center; gap: 6px; }
+.meta span::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--muted); opacity: .6; }
+
+/* App window */
+.window {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow); overflow: hidden; text-align: left; min-width: 0;
+}
+.window-bar {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  border-bottom: 1px solid var(--line); background: var(--soft);
+}
+.lights { display: flex; gap: 6px; flex: none; }
+.lights i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.lights i:nth-child(1) { background: #ff5f57; } .lights i:nth-child(2) { background: #febc2e; } .lights i:nth-child(3) { background: #28c840; }
+.window-title { flex: 1; text-align: center; font-size: 12px; color: var(--muted); font-family: var(--font-mono); margin-right: 42px; }
+.hero-window { width: 100%; max-width: 820px; margin-top: 26px; }
+.hero-body { display: grid; grid-template-columns: 1fr 1.35fr; min-height: 0; }
+.hero-side { border-right: 1px solid var(--line); padding: 18px; display: grid; gap: 4px; align-content: start; font-size: 13px; }
+.hero-side .row { display: flex; justify-content: space-between; gap: 8px; padding: 7px 10px; border-radius: 7px; }
+.hero-side .row.on { background: var(--soft); }
+.hero-side .row span:last-child { color: var(--muted); font-family: var(--font-mono); font-size: 11.5px; }
+.srt {
+  margin: 0; padding: 20px 22px; font-family: var(--font-mono); font-size: 13px; line-height: 1.7;
+  overflow-x: auto; color: var(--fg); min-width: 0;
+}
+.srt .idx { color: var(--muted); } .srt .ts { color: var(--muted); }
+.srt .gap { display: block; height: .6em; }
+.srt .cursor { display: inline-block; width: 7px; height: 1.05em; vertical-align: -2px; background: var(--fg); animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .srt .cursor { animation: none; } }
+@media (max-width: 640px) { .hero-body { grid-template-columns: 1fr; } .hero-side { display: none; } }
+
+/* Sections */
+section { padding-block: 88px 0; }
+.sec-head { text-align: center; display: grid; justify-items: center; gap: 12px; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.1; }
+.sec-head p { color: var(--muted); max-width: 52ch; margin: 0; }
+
+/* About */
+.about-text { max-width: 640px; margin: 0 auto; display: grid; gap: 14px; text-align: center; color: var(--muted); font-size: 1.02rem; }
+.about-text p { margin: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 22px; }
+.chip { font-size: 12.5px; padding: 4px 11px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+
+/* Bento */
+.bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.card { background: var(--soft); border-radius: 16px; padding: 14px; display: grid; grid-template-rows: 1fr auto; gap: 14px; min-width: 0; }
+.card.wide { grid-column: span 2; }
+.card-ui {
+  background: var(--surface); border-radius: 10px; box-shadow: var(--shadow);
+  padding: 16px; display: flex; flex-wrap: wrap; gap: 8px; align-content: center; min-height: 120px; min-width: 0;
+}
+.card-copy { padding: 0 6px 6px; }
+.card-copy h3 { font-family: var(--font-body); font-size: 14px; font-weight: 600; letter-spacing: 0; margin-bottom: 2px; }
+.card-copy p { margin: 0; color: var(--muted); font-size: 13px; }
+.tok { font-size: 12.5px; padding: 4px 10px; border-radius: 7px; background: var(--soft); white-space: nowrap; }
+.tok.mono { font-family: var(--font-mono); font-size: 12px; }
+.level { display: grid; gap: 10px; width: 100%; }
+.level-row { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 12px; font-size: 13px; }
+.bar { height: 6px; border-radius: 99px; background: var(--soft); overflow: hidden; }
+.bar b { display: block; height: 100%; background: var(--fg); border-radius: 99px; }
+.level-row em { font-style: normal; color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+.lang { display: grid; gap: 8px; width: 100%; }
+.lang div { display: flex; justify-content: space-between; font-size: 13px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+.lang div:last-child { border-bottom: 0; padding-bottom: 0; }
+.lang em { font-style: normal; color: var(--muted); }
+.checks { display: grid; gap: 8px; width: 100%; font-size: 13px; }
+.checks div { display: flex; gap: 10px; align-items: baseline; }
+.checks div::before { content: "✓"; color: var(--ok); font-weight: 600; }
+@media (max-width: 820px) { .bento { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .bento { grid-template-columns: 1fr; } .card.wide { grid-column: auto; } }
+
+/* Projects */
+.projects { display: grid; gap: 20px; }
+.project { background: var(--soft); border-radius: 20px; padding: 14px; display: grid; grid-template-columns: 1fr 1.25fr; gap: 14px; }
+.project-copy { padding: 22px 18px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.project-copy .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-family: var(--font-mono); font-size: 11px; padding: 2px 8px; border-radius: 6px; background: var(--surface); color: var(--muted); }
+.tag.ai { color: var(--warn); }
+.project h3 { font-size: 2rem; line-height: 1.1; }
+.project-copy p { margin: 0; color: var(--muted); }
+.project-copy .learned { font-size: 13.5px; }
+.project-copy .learned strong { color: var(--fg); font-weight: 600; }
+.repo { font-size: 14px; font-weight: 500; text-decoration: none; display: inline-flex; gap: 6px; align-items: center; }
+.repo:hover { text-decoration: underline; text-underline-offset: 3px; }
+.project .window { align-self: stretch; display: flex; flex-direction: column; }
+.win-body { padding: 20px; display: grid; gap: 18px; align-content: start; flex: 1; }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: var(--font-mono); font-size: 12px; margin: 0; padding: 0; list-style: none; }
+.flow li { background: var(--soft); border-radius: 6px; padding: 4px 9px; }
+.flow li.arr { background: none; padding: 0; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.stats.four { grid-template-columns: repeat(2, 1fr); }
+.stat { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+.stat b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.75rem; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12px; color: var(--muted); }
+.stat.weak b { color: var(--warn); }
+.win-foot { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); padding: 10px 20px; border-top: 1px solid var(--line); }
+.qa { display: grid; gap: 10px; font-size: 13px; }
+.qa .q { justify-self: end; background: var(--fg); color: var(--bg); padding: 8px 12px; border-radius: 12px 12px 4px 12px; max-width: 85%; }
+.qa .a { justify-self: start; background: var(--soft); padding: 10px 12px; border-radius: 12px 12px 12px 4px; max-width: 92%; color: var(--muted); }
+.qa .src { display: inline-block; margin-top: 6px; font-family: var(--font-mono); font-size: 11.5px; color: var(--fg); background: var(--surface); padding: 2px 7px; border-radius: 5px; }
+@media (max-width: 760px) { .project { grid-template-columns: 1fr; } .project-copy { padding: 14px 10px 6px; } }
+
+/* CTA */
+.cta { text-align: center; padding-block: 110px 90px; display: grid; justify-items: center; gap: 18px; }
+.cta h2 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; }
+.cta p { color: var(--muted); max-width: 48ch; margin: 0; }
+footer { border-top: 1px solid var(--line); }
+/* ---------- Motion: macOS-style easing and springs ---------- */
+:root { --ease: cubic-bezier(.32,.72,0,1); --spring: cubic-bezier(.34,1.42,.64,1); }
+.topbar { transition: box-shadow .35s var(--ease); }
+.topbar.scrolled { box-shadow: 0 1px 0 var(--line); }
+.nav a { padding: 5px 10px; margin: -5px -10px; border-radius: 7px; transition: background .25s var(--ease), opacity .25s var(--ease); }
+.nav a:hover { background: var(--soft); }
+
+/* Traffic lights reveal their glyphs on hover, like a real window */
+.lights i { width: 12px; height: 12px; display: grid; place-items: center; font: 600 9px/1 var(--font-body); color: transparent; transition: color .15s var(--ease); }
+.lights i:nth-child(1)::after { content: "×"; font-size: 10px; }
+.lights i:nth-child(2)::after { content: "−"; }
+.lights i:nth-child(3)::after { content: "+"; }
+.lights:hover i { color: rgba(0,0,0,.55); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Launch: hero content rises in, then the window opens with a spring */
+  .hero > * { animation: rise .9s var(--ease) both; }
+  .hero > :nth-child(1) { animation-delay: .05s; }
+  .hero > :nth-child(2) { animation-delay: .12s; }
+  .hero > :nth-child(3) { animation-delay: .2s; }
+  .hero > :nth-child(4) { animation-delay: .28s; }
+  .hero > :nth-child(5) { animation-delay: .34s; }
+  .hero > .hero-window { animation: win-open 1s var(--spring) .45s both; transform-origin: 50% 0; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+  @keyframes win-open { from { opacity: 0; transform: translateY(40px) scale(.9); filter: blur(10px); } }
+
+  /* Scroll reveal: only applied by script to content below the first screen */
+  .reveal { opacity: 0; transform: translateY(26px) scale(.98); filter: blur(5px); }
+  .reveal.win { transform: translateY(30px) scale(.92); transform-origin: 50% 100%; }
+  .reveal.in {
+    opacity: 1; transform: none; filter: none;
+    transition: opacity .7s var(--ease) var(--d, 0s), transform 1s var(--spring) var(--d, 0s), filter .7s var(--ease) var(--d, 0s);
+  }
+
+  /* Hover lift and press, like macOS controls */
+  .card, .window { transition: transform .55s var(--spring), box-shadow .55s var(--ease); }
+  .card:hover { transform: translateY(-4px); }
+  .project:hover .window { transform: translateY(-4px) scale(1.01); }
+  .card-ui .tok { transition: transform .35s var(--spring), background .2s var(--ease); }
+  .card-ui .tok:hover { transform: scale(1.08); background: var(--line); }
+  .btn, .pill-btn, .chip { transition: transform .3s var(--spring), background .2s var(--ease), opacity .2s var(--ease); }
+  .btn:hover, .chip:hover { transform: translateY(-1px); }
+  .btn:active, .pill-btn:active { transform: scale(.95); }
+  .repo { transition: gap .35s var(--spring); }
+  .repo:hover { gap: 10px; }
+  .bar b { transform-origin: 0 50%; }
+  .bar.grow b { animation: grow 1.2s var(--spring) both; animation-delay: var(--d, 0s); }
+  @keyframes grow { from { transform: scaleX(0); } }
+
+  /* Theme toggle: icon spins in */
+  .theme-btn svg { animation: icon-in .5s var(--spring); }
+  @keyframes icon-in { from { transform: rotate(-90deg) scale(.4); opacity: 0; } }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .5s; animation-timing-function: var(--ease); }
+}
+
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-block: 22px 40px; font-size: 12.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">L</span>Lnnk</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="pill-btn theme-btn" id="theme-toggle" type="button" aria-label="Switch color theme">
+        <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" hidden><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a class="pill-btn" href="https://github.com/Lnnkun" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <span class="badge"><span class="dot" aria-hidden="true"></span>Open to internships · 2027–2028</span>
+    <div class="hero-title">
+      <p class="hero-name"><span class="hero-avatar" aria-hidden="true">ZW</span>Zilin Wu <span>· Lnnk</span></p>
+      <h1>Learning by building.</h1>
+    </div>
+    <p class="lede">Computer Engineering student, also known as Lnnk, on the way to becoming a software &amp; AI engineer. I build small tools that turn video into searchable text.</p>
+    <div class="ctas">
+      <a class="btn dark" href="https://github.com/Lnnkun" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+        See my GitHub
+      </a>
+      <a class="btn" href="#projects">View projects</a>
+    </div>
+    <div class="meta"><span>Computer Engineering · 2nd year</span><span>Python · RAG · Whisper</span><span>中文 · Español · English</span></div>
+
+    <div class="window hero-window">
+      <div class="window-bar">
+        <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="window-title">about-me.srt</div>
+      </div>
+      <div class="hero-body">
+        <div class="hero-side" aria-hidden="true">
+          <div class="row on"><span>about-me.srt</span><span>00:06</span></div>
+          <div class="row"><span>VideoListo</span><span>v1.0</span></div>
+          <div class="row"><span>VideoBusca</span><span>RAG</span></div>
+          <div class="row"><span>ClipES</span><span>app</span></div>
+        </div>
+        <pre class="srt" aria-label="Introduction in subtitle format"><span class="idx">1</span>
+<span class="ts">00:00:00,000 --> 00:00:03,200</span>
+Hi, I'm Zilin. Online I go by Lnnk.
+<span class="gap"></span><span class="idx">2</span>
+<span class="ts">00:00:03,200 --> 00:00:06,500</span>
+I study Computer Engineering and learn by
+shipping real projects.
+<span class="gap"></span><span class="idx">3</span>
+<span class="ts">00:00:06,500 --> 00:00:09,000</span>
+Currently: software &amp; ML fundamentals.<span class="cursor" aria-hidden="true"></span></pre>
+      </div>
+    </div>
+  </div>
+
+  <section id="about" class="wrap" aria-labelledby="about-h">
+    <div class="sec-head">
+      <h2 id="about-h">Early in the journey,<br>serious about the craft.</h2>
+    </div>
+    <div class="about-text">
+      <p>I'm a second-year Computer Engineering student, expected to graduate in late 2028. I'm still on software and machine-learning fundamentals.</p>
+      <p>The fastest way I've found to learn is to pick a real problem, build something that works, measure it, and fix what the numbers show. That's how my first projects happened: a pipeline that turns Spanish videos into subtitles, then a search and Q&amp;A system on top of them.</p>
+    </div>
+    <div class="chips" aria-label="Interests">
+      <span class="chip">AI</span><span class="chip">Programming</span><span class="chip">Technology</span><span class="chip">Sports</span><span class="chip">Reading</span><span class="chip">Continuous learning</span>
+    </div>
+  </section>
+
+  <section id="skills" class="wrap" aria-labelledby="skills-h">
+    <div class="sec-head">
+      <h2 id="skills-h">What I work with.</h2>
+      <p>An honest snapshot. Some of this I use every day, some I'm still reviewing or learning.</p>
+    </div>
+    <div class="bento">
+      <div class="card">
+        <div class="card-ui">
+          <div class="level">
+            <div class="level-row"><span>Python</span><span class="bar"><b style="width:80%"></b></span><em>proficient</em></div>
+            <div class="level-row"><span>C++</span><span class="bar"><b style="width:40%"></b></span><em>reviewing</em></div>
+            <div class="level-row"><span>C#</span><span class="bar"><b style="width:40%"></b></span><em>reviewing</em></div>
+          </div>
+        </div>
+        <div class="card-copy"><h3>Programming languages</h3><p>Python is my main language. C++ and C# I've used and am brushing up on.</p></div>
+      </div>
+      <div class="card wide">
+        <div class="card-ui">
+          <span class="tok">LLM API integration</span><span class="tok">RAG</span><span class="tok">Embeddings</span><span class="tok">Vector search</span><span class="tok">Speech-to-text</span><span class="tok">Evaluation sets</span><span class="tok">Environment setup</span>
+        </div>
+        <div class="card-copy"><h3>AI / ML</h3><p>What I've learned hands-on from VideoListo and VideoBusca, on top of ML fundamentals I'm studying now.</p></div>
+      </div>
+      <div class="card wide">
+        <div class="card-ui">
+          <span class="tok mono">openai-whisper</span><span class="tok mono">torch (CUDA)</span><span class="tok mono">sentence-transformers</span><span class="tok mono">chromadb</span><span class="tok mono">openai</span><span class="tok mono">yt-dlp</span><span class="tok mono">fastapi</span><span class="tok mono">streamlit</span><span class="tok mono">python-dotenv</span>
+        </div>
+        <div class="card-copy"><h3>Python libraries</h3><p>The libraries my projects actually run on.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-ui">
+          <span class="tok">Git</span><span class="tok">GitHub</span><span class="tok">VS Code</span><span class="tok">Visual Studio</span><span class="tok">Orca</span><span class="tok">ffmpeg</span>
+        </div>
+        <div class="card-copy"><h3>Tools</h3><p>Day-to-day development setup.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-ui">
+          <div class="lang"><div><span>中文 Chinese</span><em>Native</em></div><div><span>Español Spanish</span><em>Fluent</em></div><div><span>English</span><em>Learning</em></div></div>
+        </div>
+        <div class="card-copy"><h3>Languages</h3><p>My projects focus on Spanish-language content.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-ui">
+          <div class="checks"><div>Self-taught on what each project needs</div><div>A working version first, then iterate</div><div>No procrastination</div><div>On time, every time</div></div>
+        </div>
+        <div class="card-copy"><h3>How I work</h3><p>Fast validation over endless planning.</p></div>
+      </div>
+      <div class="card">
+        <div class="card-ui">
+          <span class="tok">Software fundamentals</span><span class="tok">ML fundamentals</span><span class="tok">English</span><span class="tok">Certifications (planned)</span>
+        </div>
+        <div class="card-copy"><h3>Currently learning</h3><p>No certifications yet. A few are on the plan.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="wrap" aria-labelledby="projects-h">
+    <div class="sec-head">
+      <h2 id="projects-h">From video to answers.</h2>
+      <p>Three projects that build on each other: transcribe, search, then put it all in one app.</p>
+    </div>
+    <div class="projects">
+
+      <article class="project">
+        <div class="project-copy">
+          <div class="tags"><span class="tag">Python</span><span class="tag">CLI</span><span class="tag">v1.0</span></div>
+          <h3>VideoListo</h3>
+          <p>Turns a long Spanish video into subtitles plus a ready-to-post title, description, chapter timestamps and tags, with one command. Built first for my own use, aimed at Spanish-speaking creators.</p>
+          <p class="learned"><strong>What I learned:</strong> setting up a GPU environment (CUDA builds of PyTorch, ffmpeg), keeping API keys in <code>.env</code>, and measuring speed and cost instead of guessing.</p>
+          <a class="repo" href="https://github.com/Lnnkun/VideoListo" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+        <div class="window">
+          <div class="window-bar"><div class="lights" aria-hidden="true"><i></i><i></i><i></i></div><div class="window-title">python main.py video.mp4</div></div>
+          <div class="win-body">
+            <ol class="flow" aria-label="Pipeline">
+              <li>video.mp4</li><li class="arr" aria-hidden="true">→</li><li>ffmpeg</li><li class="arr" aria-hidden="true">→</li><li>Whisper small</li><li class="arr" aria-hidden="true">→</li><li>LLM · OpenRouter</li><li class="arr" aria-hidden="true">→</li><li>.srt + meta.md</li>
+            </ol>
+            <div class="stats">
+              <div class="stat"><b>336 min</b><span>audio in ~20 min, 19 videos</span></div>
+              <div class="stat"><b>16.6×</b><span>real time, RTX 4060</span></div>
+              <div class="stat"><b>~36 s</b><span>per 10-minute video</span></div>
+            </div>
+          </div>
+          <div class="win-foot">whisper · torch · ffmpeg · openrouter</div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-copy">
+          <div class="tags"><span class="tag">Python</span><span class="tag">RAG</span></div>
+          <h3>VideoBusca</h3>
+          <p>A searchable knowledge base for Spanish videos, built on VideoListo's subtitles. Ask a question across many videos and get an answer that cites the source video and the exact timestamp. If the material doesn't support an answer, it says so.</p>
+          <p class="learned"><strong>What I learned:</strong> how embeddings and a vector store fit together in a RAG system, and why it needs an evaluation set. The numbers showed citations are reliable, and answer accuracy is what to improve next.</p>
+          <a class="repo" href="https://github.com/Lnnkun/VideoBusca" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+        <div class="window">
+          <div class="window-bar"><div class="lights" aria-hidden="true"><i></i><i></i><i></i></div><div class="window-title">eval · 2026-11-01 · top_k=10</div></div>
+          <div class="win-body">
+            <ol class="flow" aria-label="Pipeline">
+              <li>subtitles</li><li class="arr" aria-hidden="true">→</li><li>sentence-transformers</li><li class="arr" aria-hidden="true">→</li><li>ChromaDB</li><li class="arr" aria-hidden="true">→</li><li>LLM + source @ time</li>
+            </ol>
+            <div class="stats four" aria-label="Evaluation results">
+              <div class="stat"><b>100%</b><span>valid citations</span></div>
+              <div class="stat"><b>88%</b><span>correct refusals</span></div>
+              <div class="stat weak"><b>53%</b><span>answer accuracy · next to improve</span></div>
+              <div class="stat"><b>2.5 s</b><span>median response</span></div>
+            </div>
+          </div>
+          <div class="win-foot">sentence-transformers · chromadb · openai · yt-dlp</div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-copy">
+          <div class="tags"><span class="tag">Python</span><span class="tag ai">AI-assisted build</span></div>
+          <h3>ClipES</h3>
+          <p>Brings VideoListo and VideoBusca together into one app for Spanish AI explainer videos: ask a question, get an answer with its source, and jump straight to that moment in the video.</p>
+          <p class="learned"><strong>How it was made:</strong> built mostly through AI-assisted ("vibe") coding, as an experiment in how fast an idea can become a working full-stack app.</p>
+          <a class="repo" href="https://github.com/Lnnkun/ClipES" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+        <div class="window">
+          <div class="window-bar"><div class="lights" aria-hidden="true"><i></i><i></i><i></i></div><div class="window-title">ClipES · Streamlit + FastAPI</div></div>
+          <div class="win-body">
+            <div class="qa" aria-label="How the app works">
+              <div class="q">Ask a question about the videos</div>
+              <div class="a">Get an answer drawn from the transcripts, with the source it came from.<br><span class="src">▶ open video at the cited timestamp</span></div>
+            </div>
+            <ol class="flow" aria-label="Architecture">
+              <li>Streamlit UI</li><li class="arr" aria-hidden="true">↔</li><li>FastAPI</li><li class="arr" aria-hidden="true">↔</li><li>Whisper + embeddings + RAG</li>
+            </ol>
+          </div>
+          <div class="win-foot">fastapi · streamlit · whisper · embeddings</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="contact" class="wrap cta" aria-labelledby="contact-h">
+    <span class="badge"><span class="dot" aria-hidden="true"></span>Software / AI engineering internships</span>
+    <h2 id="contact-h">Let's build something<br>worth shipping.</h2>
+    <p>I'm looking for internships in 2027 and 2028. The best way to see what I'm working on is my GitHub.</p>
+    <div class="ctas">
+      <a class="btn dark" href="https://github.com/Lnnkun" target="_blank" rel="noopener">github.com/Lnnkun</a>
+      <!-- TODO: replace with your LinkedIn URL -->
+      <span class="btn" aria-disabled="true">LinkedIn · coming soon</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Zilin Wu · Lnnk</span><span>Explore, create and share.</span></div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+  var moon = document.getElementById('icon-moon');
+  var sun = document.getElementById('icon-sun');
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  function current() {
+    var t = root.getAttribute('data-theme');
+    if (t === 'dark' || t === 'light') return t;
+    return mq.matches ? 'dark' : 'light';
+  }
+  function sync() {
+    var dark = current() === 'dark';
+    moon.hidden = dark; sun.hidden = !dark;
+    btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  try {
+    var saved = localStorage.getItem('lnnk-theme');
+    if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
+  } catch (e) {}
+  sync();
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  btn.addEventListener('click', function () {
+    var next = current() === 'dark' ? 'light' : 'dark';
+    function apply() {
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('lnnk-theme', next); } catch (e) {}
+      sync();
+    }
+    if (document.startViewTransition && !reduce) document.startViewTransition(apply);
+    else apply();
+  });
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+})();
+</script>
+<script>
+(function () {
+  var topbar = document.querySelector('.topbar');
+  function onScroll() { topbar.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+
+  // Count-up for stat numbers, keeping prefix/suffix and decimals
+  function countUp(el) {
+    var text = el.textContent;
+    var m = text.match(/(\d+(?:\.\d+)?)/);
+    if (!m) return;
+    var target = parseFloat(m[1]);
+    var decimals = (m[1].split('.')[1] || '').length;
+    var start = null, dur = 1100;
+    function frame(t) {
+      if (start === null) start = t;
+      var p = Math.min((t - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 4);
+      el.textContent = text.replace(m[1], (target * eased).toFixed(decimals));
+      if (p < 1) requestAnimationFrame(frame); else el.textContent = text;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Groups that reveal together, with a stagger
+  var groups = [
+    ['.sec-head', 0], ['.about-text', 0], ['.chips', 0],
+    ['.bento .card', 0.07], ['.project-copy', 0], ['.project .window', 0],
+    ['.cta > *', 0.08]
+  ];
+  var items = [];
+  groups.forEach(function (g) {
+    document.querySelectorAll(g[0]).forEach(function (el, i) {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return; // already on screen: leave as is
+      el.classList.add('reveal');
+      if (el.classList.contains('window')) { el.classList.add('win'); el.style.setProperty('--d', '0.12s'); }
+      else el.style.setProperty('--d', (i * g[1]) + 's');
+      items.push(el);
+    });
+  });
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      io.unobserve(el);
+      el.classList.add('in');
+      el.querySelectorAll('.stat b').forEach(countUp);
+      el.querySelectorAll('.bar').forEach(function (b, i) { b.style.setProperty('--d', (0.2 + i * 0.1) + 's'); b.classList.add('grow'); });
+      // Hand control back to hover transitions once the entrance is over
+      setTimeout(function () {
+        el.classList.remove('reveal', 'in', 'win');
+        el.style.removeProperty('--d');
+      }, 1300 + (parseFloat(el.style.getPropertyValue('--d')) || 0) * 1000);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  items.forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>
